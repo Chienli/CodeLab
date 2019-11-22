@@ -6,16 +6,55 @@ using System.Threading.Tasks;
 
 namespace CodeLab
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            // The code provided will print ‘Hello World’ to the console.
-            // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
-            Console.WriteLine("Hello World!");
-            Console.ReadKey();
+            var familyCar = new FamilyCar(2019, "BNW", 240, "Guy Lin", 1998);
+            familyCar.PrintCar();
+        }
+    }
 
-            // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
+    internal class FamilyCar : Car //collapse hierarchy
+    {
+        public void PrintCar()
+        {
+            Console.WriteLine($"Owner : {Owner}");
+
+            // print CarDetail
+            Console.WriteLine($"Brand : {Brand}");
+            Console.WriteLine($"MaxVelocity : {MaxVelocity}");
+            Console.WriteLine($"Years : {Years}");
+        }
+
+        public FamilyCar(int years, string brand, int maxVelocity, string owner, int productionTime) : base(years, brand, maxVelocity, owner, productionTime)
+        {
+        }
+    }
+
+    internal class Car
+    {
+        public int Years { get; set; }
+        public string Brand { get; set; }
+        public int MaxVelocity { get; set; }
+        public string Owner { get; set; }
+        public string Color { get; set; } // unused field
+        public int ProductionTime { get; set; }
+
+        public Car(int years, string brand, int maxVelocity, string owner, int productionTime)
+        {
+            Years = years - ProductionTime;
+            Brand = brand;
+            MaxVelocity = maxVelocity;
+            Owner = owner;
+        }
+
+        public string ToXML()
+        {
+            var xml = $"<Years>{Years}</Years>" +
+                    $"<Brand>{Brand}</Brand>" +
+                    $"<Owner>{Owner}</Owner>";
+            return xml;
         }
     }
 }
